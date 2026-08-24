@@ -85,7 +85,7 @@ const refresh = async (req, res) => {
   const savedToken = await tokensRepository.getByToken(refreshToken);
 
   if (!userData || !savedToken) {
-    res.clearCookie(authService.REFRESH_TOKEN_COOKIE);
+    authService.clearRefreshCookie(res);
 
     throw ApiError.unauthorized('Refresh token is not valid');
   }
@@ -107,7 +107,7 @@ const logout = async (req, res) => {
     await tokensRepository.remove(userData.id);
   }
 
-  res.clearCookie(authService.REFRESH_TOKEN_COOKIE);
+  authService.clearRefreshCookie(res);
   res.sendStatus(204);
 };
 
@@ -175,7 +175,7 @@ const confirmEmailChange = async (req, res) => {
   });
 
   await tokensRepository.remove(user.id);
-  res.clearCookie(authService.REFRESH_TOKEN_COOKIE);
+  authService.clearRefreshCookie(res);
 
   res.send({ message: 'The email has been changed, please log in again' });
 };

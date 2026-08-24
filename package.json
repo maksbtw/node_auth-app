@@ -11,6 +11,7 @@
     "test:only": "mate-scripts test",
     "update": "mate-scripts update",
     "postinstall": "npm run update",
+    "test": "npm run lint && npm run test:only",
     "dev": "nodemon src/index.js",
     "db:migrate": "prisma migrate dev"
   },
