@@ -10,10 +10,14 @@ const { authService } = require('../services/auth.service.js');
 const { usersRepository } = require('../entity/users.repository.js');
 
 async function getCurrentUser(req) {
+  if (!req.user?.id) {
+    throw ApiError.unauthorized('Access token is required');
+  }
+
   const user = await usersRepository.getById(req.user.id);
 
   if (!user) {
-    throw ApiError.unauthorized('The account does not exist anymore');
+    throw ApiError.notFound('The account does not exist anymore');
   }
 
   return user;

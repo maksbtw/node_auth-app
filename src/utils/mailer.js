@@ -50,6 +50,7 @@ async function send(email, subject, html) {
   const previewUrl = nodemailer.getTestMessageUrl(info);
 
   if (previewUrl) {
+    // eslint-disable-next-line no-console
     console.log(`Letter "${subject}" for ${email}: ${previewUrl}`);
   }
 
